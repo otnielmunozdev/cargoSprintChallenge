@@ -40,7 +40,7 @@ export class RouteBComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/ruta-a']);
+    this.router.navigate(['/route-a']);
   }
 
 }
