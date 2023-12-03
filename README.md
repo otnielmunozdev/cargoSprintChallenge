@@ -2,6 +2,23 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.2.
 
+## Problem
+Create a web application in Angular with the following features.
+
+- The web page should contain 2 routes, A and B.
+
+- In route A, the following problem should be solved:
+
+Given an array of 7 positions where each position represents a day of the week (e.g., [25, 36, 78, 14, 64, 27, 80]), an algorithm should be created to determine the best buying and selling prices to achieve the highest profit. Consider that:
+
+- Selling should occur after buying.
+  
+  - Only one traversal of the array should be performed.
+
+  - Return 0 if no profit can be obtained.
+
+Add a button on route A that executes the algorithm and displays the result on route B.
+
 ## Method `calculateBestProfit`
 
 ### Description
