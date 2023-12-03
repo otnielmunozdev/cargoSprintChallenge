@@ -1,0 +1,23 @@
+<section>
+    <div class="page-container">
+        <h1>CargoSprint Challenge</h1>
+
+        <div class="table-container table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th *ngFor="let day of daysOfWeek">{{ day }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td *ngFor="let price of prices; let i = index">
+                            <input type="number" [(ngModel)]="prices[i]" min="0" class="form-control" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button (click)="executeAlgorithm()" class="btn btn-primary">Continuar</button>
+        </div>
+    </div>
+</section>

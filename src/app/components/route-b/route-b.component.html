@@ -1,0 +1,13 @@
+<section>
+    <div class="result-card">
+        <h2>Resultados</h2>
+
+        <p>Día de compra: {{ result.buyDay | daysOfWeek }}</p>
+        <p>Día de venta: {{ result.sellDay | daysOfWeek }}</p>
+        <p>Ganancia: {{ result.profit | currency:'USD':'symbol':'1.2-2' }}</p>
+        
+        <button (click)="goBack()" class="btn btn-primary">Regresar</button>
+
+    </div>
+
+</section>

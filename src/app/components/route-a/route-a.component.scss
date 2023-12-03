@@ -1,0 +1,37 @@
+$txtColor: #fff;
+$bgTableCont: #333;
+
+  .page-container {
+    color: $txtColor;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto; 
+    width: 80%; 
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transition: box-shadow 0.3s ease; 
+  }
+
+  .page-container:hover {
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.4);
+  }
+  
+  h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .table-container {
+    background-color: $bgTableCont; 
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+  
+  .table-container table {
+    color: $txtColor; 
+  }
+  
+  .btn-primary {
+    margin-top: 20px;
+  }
