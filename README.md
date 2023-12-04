@@ -23,7 +23,7 @@ Add a button on route A that executes the algorithm and displays the result on r
 
 ### Description
 
-This method calculates the best possible profit by buying and selling stocks on specific days, given the daily price variations.
+This method calculates the best possible profit by buying and selling stocks on specific days, considering daily price variations. It has been modified to handle edge cases and ensure accurate results.
 
 ### Parameters
 
@@ -31,22 +31,22 @@ This method calculates the best possible profit by buying and selling stocks on 
 
 ### Return Value
 
-- `Profit`: An object containing information about the best possible profit, including the buy day (`buyDay`), sell day (`sellDay`), and profit (`profit`).
+- `Profit`: An object containing information about the best possible profit, including the day of purchase (`buyDay`), the day of sale (`sellDay`), and the profit (`profit`).
 
 ### Behavior
 
-1. If the prices array (`prices`) is undefined or has less than two elements, the method returns a `Profit` object with all values set to zero.
+1. If the prices array (`prices`) is undefined or has fewer than two elements, the method returns a `Profit` object with all values set to zero.
 
-2. The method iterates through the prices array to find the best possible profit.
-   - Initializes `minPrice` with the first element of the array.
-   - Initializes `maxProfit` to zero.
-   - Initializes `buyDay` and `sellDay` to one.
+2. The method traverses the prices array to find the best possible profit.
+   - It initializes `minPrice` with the first element of the array.
+   - It initializes `maxProfit` to zero.
+   - It initializes `buyDay` and `sellDay` to one.
+   - It introduces `currentBuyDay` to keep track of the current potential buy day.
+   - It introduces `isNotDecreasing` to track whether the prices are not strictly decreasing.
 
-3. For each subsequent day, the method calculates the potential profit if bought at `minPrice` and sold at the current price.
-   - If the current price is less than `minPrice`, updates `minPrice` and adjusts `buyDay` and `sellDay` to the current day.
-   - If the current profit is greater than the maximum profit (`maxProfit`), updates `maxProfit` and adjusts `sellDay` to the current day.
+3. For each subsequent day, the method updates `minPrice` and `currentBuyDay` if the current price is less than the minimum price. It also updates `maxProfit`, `buyDay`, and `sellDay` if the current profit is greater than the maximum profit or if the current profit is zero and the prices are not decreasing.
 
-4. Finally, the method returns a `Profit` object containing information about the best possible profit.
+4. Finally, the method adjusts `sellDay` if `buyDay` is equal to `sellDay` and `sellDay` is less than the length of the prices array.
 
 ### Example Usage
 
@@ -60,10 +60,10 @@ const result = calculateBestProfit(prices);
 
 ### Notes
 
-- The buy day (`buyDay`) and sell day (`sellDay`) are based on one to N indices, where N is the length of the prices array.
-- The method also logs the result to the console for ease of debugging or tracking the process.
+- The purchase day (`buyDay`) and sale day (`sellDay`) are based on one-based indices, where one represents the first day.
+- The method ensures accuracy in scenarios where prices are not strictly decreasing. If prices are strictly decreasing, it returns a `Profit` object with all values set to zero.
 
-This method is useful for making informed decisions on when to buy and sell stocks to maximize profits. Make sure to provide a valid prices array for accurate results.
+This method is useful for making informed decisions on when to buy and sell stocks to maximize profits. Ensure you provide a valid prices array for accurate results.
 
 ## Development server
 
