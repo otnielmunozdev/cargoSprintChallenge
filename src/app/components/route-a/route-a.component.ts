@@ -12,6 +12,7 @@ export class RouteAComponent implements OnInit {
 
   daysOfWeek: string[] = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
   prices: number[] = [25, 36, 78, 14, 64, 27, 80];
+  tablePrices: number[] = [];
   result: Profit = {
     buyDay: 0,
     sellDay: 0,
@@ -19,57 +20,74 @@ export class RouteAComponent implements OnInit {
   };
 
   constructor(private router: Router,
-              private dataSharingService: DataSharingService) {
+    private dataSharingService: DataSharingService) {
 
   }
 
   ngOnInit(): void {
+    this.tablePrices = [...this.prices];
   }
 
   executeAlgorithm(): void {
-    this.result = this.calculateBestProfit(this.prices);
+    this.result = this.calculateBestProfit(this.tablePrices);
     this.dataSharingService.setProfit(this.result);
     this.goToRouteB();
   }
 
   /**
- * Calculates the best possible profit by buying and selling stocks on specific days,
- * given the daily stock prices.
- * For each subsequent day, the method calculates the potential profit if bought at
- * minPrice and sold at the current price.
- *
- * @param prices An array of numbers representing the daily stock prices.
- * @returns A Profit object with information about the best possible profit.
- */
+   * Calculates the best possible profit by buying and selling stocks on specific days,
+   * given the daily stock prices.
+   * 
+   * @param prices - An array of stock prices over a period of time.
+   * @returns An object representing the best profit, buy day, and sell day.
+   * 
+   * If input is invalid or prices are decreasing, returns { buyDay: 0, sellDay: 0, profit: 0 }.
+   * 
+   * Algorithm:
+   * - Tracks minimum price, maximum profit, buy day, and sell day.
+   * - Iterates through prices, updating variables for better opportunities.
+   * - Returns calculated profit object.
+   * 
+  */
 
   calculateBestProfit(prices: number[]): Profit {
     if (!prices || prices.length < 2) {
       return { buyDay: 0, sellDay: 0, profit: 0 };
     }
-  
+
     let minPrice: number = prices[0];
     let maxProfit: number = 0;
     let buyDay: number = 1;
     let sellDay: number = 1;
-  
-    for (let i = 1; i < prices.length; i++) {
+    let currentBuyDay: number = 1;
+    let isNotDecreasing: boolean = false;
+    let pricesLength = prices.length;
+
+    for (let i = 1; i < pricesLength; i++) {
+
+      if (prices[i] >= prices[i - 1]) {
+        isNotDecreasing = true;
+      }
+
       const currentProfit = prices[i] - minPrice;
-      
+
       if (prices[i] < minPrice) {
         minPrice = prices[i];
-        buyDay = i + 1;
-        sellDay = i + 1;
-      } else if (currentProfit > maxProfit) {
+        currentBuyDay = i + 1;
+      } else if (currentProfit > maxProfit || (currentProfit === 0 && prices[i] >= prices[i - 1])) {
         maxProfit = currentProfit;
+        buyDay = currentBuyDay;
         sellDay = i + 1;
       }
     }
-  
-    const profitResult: Profit = { buyDay, sellDay, profit: maxProfit };
-  
-    console.log("calculateBestProfit result: ", profitResult);
-  
-    return profitResult;
+
+    if (buyDay === sellDay && buyDay < pricesLength) {
+      if (sellDay < pricesLength) {
+        sellDay++;
+      }
+    }
+
+    return !isNotDecreasing? { buyDay: 0, sellDay: 0, profit: 0 }:{ buyDay, sellDay, profit: maxProfit };
   }
 
   goToRouteB(): void {

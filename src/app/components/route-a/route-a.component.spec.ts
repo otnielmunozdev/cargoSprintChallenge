@@ -62,10 +62,38 @@ describe('RouteAComponent', () => {
 
   it('should handle an array with equal prices', () => {
     const prices: number[] = [50, 50, 50, 50, 50];
-    const expectedProfit = { buyDay: 1, sellDay: 1, profit: 0 };
+    const expectedProfit = { buyDay: 1, sellDay: 5, profit: 0 };
 
     const result = component.calculateBestProfit(prices);
 
     expect(result).toEqual(expectedProfit);
   });
+  
+  it('should handle when the last day is the cheapest but avoiding buying without selling ', () => {
+    const prices: number[] = [23, 10, 9, 8, 7, 7, 3];
+    const expectedProfit = { buyDay: 5, sellDay: 6, profit: 0 };
+
+    const result = component.calculateBestProfit(prices);
+
+    expect(result).toEqual(expectedProfit);
+  });
+
+  it('should handle when it has bigger values before the buyDay', () => {
+    const prices: number[] = [323190, 154650, 79727, 82, 7565, 74355, 99990];
+    const expectedProfit = { buyDay: 4, sellDay: 7, profit: 99908 };
+
+    const result = component.calculateBestProfit(prices);
+
+    expect(result).toEqual(expectedProfit);
+  });
+
+  it('return 0 if theyre decreasing', () => {
+    const prices: number[] = [9, 8, 7, 6, 5, 4, 3];
+    const expectedProfit = { buyDay: 0, sellDay: 0, profit: 0 };
+
+    const result = component.calculateBestProfit(prices);
+
+    expect(result).toEqual(expectedProfit);
+  });
+
 });
