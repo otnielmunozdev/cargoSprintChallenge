@@ -51,10 +51,6 @@ export class RouteAComponent implements OnInit {
   */
 
   calculateBestProfit(prices: number[]): Profit {
-    if (!prices || prices.length < 2) {
-      return { buyDay: 0, sellDay: 0, profit: 0 };
-    }
-
     let minPrice: number = prices[0];
     let maxProfit: number = 0;
     let buyDay: number = 1;
