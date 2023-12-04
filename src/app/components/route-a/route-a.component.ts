@@ -74,20 +74,13 @@ export class RouteAComponent implements OnInit {
       if (prices[i] < minPrice) {
         minPrice = prices[i];
         currentBuyDay = i + 1;
-      } else if (currentProfit > maxProfit || (currentProfit === 0 && prices[i] >= prices[i - 1])) {
+      } else if (currentProfit > maxProfit || (currentProfit === 0 && (prices[i] > prices[i - 1]))) {
         maxProfit = currentProfit;
         buyDay = currentBuyDay;
         sellDay = i + 1;
       }
     }
-
-    if (buyDay === sellDay && buyDay < pricesLength) {
-      if (sellDay < pricesLength) {
-        sellDay++;
-      }
-    }
-
-    return !isNotDecreasing? { buyDay: 0, sellDay: 0, profit: 0 }:{ buyDay, sellDay, profit: maxProfit };
+    return !isNotDecreasing || maxProfit === 0 ? { buyDay: 0, sellDay: 0, profit: 0 } : { buyDay, sellDay, profit: maxProfit };
   }
 
   goToRouteB(): void {

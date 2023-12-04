@@ -62,7 +62,7 @@ describe('RouteAComponent', () => {
 
   it('should handle an array with equal prices', () => {
     const prices: number[] = [50, 50, 50, 50, 50];
-    const expectedProfit = { buyDay: 1, sellDay: 5, profit: 0 };
+    const expectedProfit = { buyDay: 0, sellDay: 0, profit: 0 };
 
     const result = component.calculateBestProfit(prices);
 
@@ -71,7 +71,7 @@ describe('RouteAComponent', () => {
   
   it('should handle when the last day is the cheapest but avoiding buying without selling ', () => {
     const prices: number[] = [23, 10, 9, 8, 7, 7, 3];
-    const expectedProfit = { buyDay: 5, sellDay: 6, profit: 0 };
+    const expectedProfit = { buyDay: 0, sellDay: 0, profit: 0 };
 
     const result = component.calculateBestProfit(prices);
 
