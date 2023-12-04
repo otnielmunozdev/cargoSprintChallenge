@@ -60,14 +60,9 @@ export class RouteAComponent implements OnInit {
     let buyDay: number = 1;
     let sellDay: number = 1;
     let currentBuyDay: number = 1;
-    let isNotDecreasing: boolean = false;
     let pricesLength = prices.length;
 
     for (let i = 1; i < pricesLength; i++) {
-
-      if (prices[i] >= prices[i - 1]) {
-        isNotDecreasing = true;
-      }
 
       const currentProfit = prices[i] - minPrice;
 
@@ -80,7 +75,7 @@ export class RouteAComponent implements OnInit {
         sellDay = i + 1;
       }
     }
-    return !isNotDecreasing || maxProfit === 0 ? { buyDay: 0, sellDay: 0, profit: 0 } : { buyDay, sellDay, profit: maxProfit };
+    return maxProfit === 0 ? { buyDay: 0, sellDay: 0, profit: 0 } : { buyDay, sellDay, profit: maxProfit };
   }
 
   goToRouteB(): void {
