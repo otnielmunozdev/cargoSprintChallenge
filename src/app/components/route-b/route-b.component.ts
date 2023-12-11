@@ -11,7 +11,7 @@ import { Profit } from '../../models/Profit.model';
 })
 export class RouteBComponent implements OnDestroy {
 
-  private resultSubscription: Subscription;
+  private resultProfitSubs: Subscription = new Subscription;
   result: Profit = {
     buyDay: 0,
     sellDay: 0,
@@ -20,19 +20,22 @@ export class RouteBComponent implements OnDestroy {
 
   constructor(private resultProfitService: ResultProfitService,
     private router: Router) {
-    this.resultSubscription = this.resultProfitService.getProfit().subscribe({
+      this.resultProfitSubscription();
+  }
+
+  resultProfitSubscription(): void{
+    this.resultProfitSubs = this.resultProfitService.getProfit().subscribe({
       next: (resp) => {
         this.result = resp;
       },
       error: (error) => {
-        console.error("Error resultProfitService.result$: ", error);
+        console.error("Error esultProfitService.result$: ", error);
       }
     });
   }
 
-
   ngOnDestroy(): void {
-    this.resultSubscription.unsubscribe();
+    this.resultProfitSubs.unsubscribe();
   }
 
   goBack() {
