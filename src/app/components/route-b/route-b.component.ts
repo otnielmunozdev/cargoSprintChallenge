@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { DataSharingService } from 'src/app/services/data-sharing.service';
+import { ResultProfitService } from 'src/app/services/result-profit.service';
 import { Profit } from '../../models/Profit.model';
 
 @Component({
@@ -9,7 +9,7 @@ import { Profit } from '../../models/Profit.model';
   templateUrl: './route-b.component.html',
   styleUrls: ['./route-b.component.scss']
 })
-export class RouteBComponent implements OnInit {
+export class RouteBComponent implements OnDestroy {
 
   private resultSubscription: Subscription;
   result: Profit = {
@@ -18,22 +18,18 @@ export class RouteBComponent implements OnInit {
     profit: 0,
   };
 
-  constructor(private dataSharingService: DataSharingService,
-              private router: Router) {
-
-    this.resultSubscription = this.dataSharingService.result$.subscribe({
+  constructor(private resultProfitService: ResultProfitService,
+    private router: Router) {
+    this.resultSubscription = this.resultProfitService.getProfit().subscribe({
       next: (resp) => {
         this.result = resp;
       },
       error: (error) => {
-        console.error("Error dataSharingService.result$: ", error);
+        console.error("Error resultProfitService.result$: ", error);
       }
     });
-
   }
 
-  ngOnInit(): void {
-  }
 
   ngOnDestroy(): void {
     this.resultSubscription.unsubscribe();

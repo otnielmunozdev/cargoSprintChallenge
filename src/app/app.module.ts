@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DataSharingService } from 'src/app/services/data-sharing.service';
 
 @NgModule({
   declarations: [
@@ -13,7 +12,7 @@ import { DataSharingService } from 'src/app/services/data-sharing.service';
     BrowserModule,
     AppRoutingModule
   ],
-  providers:[DataSharingService],
+  providers:[],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,27 +1,27 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DataSharingService } from 'src/app/services/data-sharing.service';
+import { ResultProfitService } from 'src/app/services/result-profit.service';
 
 import { RouteAComponent } from './route-a.component';
 
 describe('RouteAComponent', () => {
   let component: RouteAComponent;
   let routerSpy: jasmine.SpyObj<Router>;
-  let dataSharingServiceSpy: jasmine.SpyObj<DataSharingService>;
+  let resultServiceSpy: jasmine.SpyObj<ResultProfitService>;
 
   beforeEach(() => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
-    dataSharingServiceSpy = jasmine.createSpyObj('DataSharingService', ['setProfit']);
+    resultServiceSpy = jasmine.createSpyObj('resultProfitService', ['setProfit']);
 
     TestBed.configureTestingModule({
       providers: [
         { provide: Router, useValue: routerSpy },
-        { provide: DataSharingService, useValue: dataSharingServiceSpy },
+        { provide: ResultProfitService, useValue: resultServiceSpy },
       ],
     });
 
-    component = new RouteAComponent(routerSpy, dataSharingServiceSpy);
+    component = new RouteAComponent(routerSpy, resultServiceSpy);
   });
 
   it('should calculate the best profit for the given array', () => {

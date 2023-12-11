@@ -1,7 +1,9 @@
-$txtColor: #fff;
+@import '../../../styles.scss';
+
+$bgColor: #1c1c1c;
 
 .result-card {
-    background-color: #1c1c1c; 
+    background-color: $bgColor; 
     color: $txtColor; 
     padding: 20px;
     border-radius: 10px;

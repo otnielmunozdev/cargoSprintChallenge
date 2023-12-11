@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataSharingService } from 'src/app/services/data-sharing.service';
+import { ResultProfitService } from 'src/app/services/result-profit.service';
 import { Profit } from '../../models/Profit.model';
 
 @Component({
@@ -8,11 +8,9 @@ import { Profit } from '../../models/Profit.model';
   templateUrl: './route-a.component.html',
   styleUrls: ['./route-a.component.scss']
 })
-export class RouteAComponent implements OnInit {
+export class RouteAComponent {
 
-  daysOfWeek: string[] = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
   prices: number[] = [25, 36, 78, 14, 64, 27, 80];
-  tablePrices: number[] = [];
   result: Profit = {
     buyDay: 0,
     sellDay: 0,
@@ -20,17 +18,13 @@ export class RouteAComponent implements OnInit {
   };
 
   constructor(private router: Router,
-    private dataSharingService: DataSharingService) {
+              public resultProfitService: ResultProfitService) {
 
-  }
-
-  ngOnInit(): void {
-    this.tablePrices = [...this.prices];
   }
 
   executeAlgorithm(): void {
-    this.result = this.calculateBestProfit(this.tablePrices);
-    this.dataSharingService.setProfit(this.result);
+    this.result = this.calculateBestProfit(this.prices);
+    this.resultProfitService.setProfit(this.result);
     this.goToRouteB();
   }
 
@@ -51,6 +45,7 @@ export class RouteAComponent implements OnInit {
   */
 
   calculateBestProfit(prices: number[]): Profit {
+    console.time();
     let minPrice: number = prices[0];
     let maxProfit: number = 0;
     let buyDay: number = 1;
@@ -75,6 +70,7 @@ export class RouteAComponent implements OnInit {
   }
 
   goToRouteB(): void {
+    console.timeEnd();
     this.router.navigate(['/route-b']);
   }
 
